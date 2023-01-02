@@ -1,0 +1,183 @@
+.form-register {
+    color: #F2AA1F;
+}
+
+.row {
+    width: 60%;
+    float: right;
+}
+
+.user-movies,
+.user-actors {
+    overflow-y: scroll;
+    width: auto;
+    height: 57vh;
+}
+
+.text-color-dark {
+    color: #114358;
+}
+
+.panel-admin {
+    color: #114358;
+}
+
+.btn-admin {
+    background-color: #090909;
+    color: #f1ece7;
+}
+
+#graphUsers,
+#graphMovies,
+#graphActors,
+#graphCategory,
+#graphCategoryUser,
+#graphMerkle {
+    background-color: #114358;
+    width: auto;
+    height: auto;
+    max-height: 57vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+/*STARS*/
+.form-stars {
+    width: 250px;
+    margin: 0 auto;
+    height: 50px;
+}
+
+th {
+    width: 100%;
+}
+
+.form-p-stars {
+    text-align: center;
+}
+
+.form-label-stars {
+    font-size: 20px;
+}
+
+.input-stars[type="radio"] {
+    display: none;
+}
+
+.label-stars {
+    color: grey;
+}
+
+.clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover~label {
+    color: orange;
+}
+
+input[type="radio"]:checked~label {
+    color: orange;
+}
+
+
+/*TABS*/
+
+.wrapper {
+    /*max-width: 50rem;*/
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.tabs {
+    position: relative;
+    /*margin: 3rem 0;*/
+    background: #114358;
+    /*height: 14.75rem;*/
+    height: 100%;
+}
+
+.tabs::before,
+.tabs::after {
+    content: "";
+    display: table;
+}
+
+.tabs::after {
+    clear: both;
+}
+
+.tab {
+
+    float: left;
+}
+
+.tab-switch {
+    display: none;
+}
+
+.tab-label {
+    position: relative;
+    display: block;
+    line-height: 2.75em;
+    height: 3em;
+    padding: 0 1.618em;
+    background: #114358;
+    border-right: 0.125rem solid #114358;
+    color: #fff;
+    cursor: pointer;
+    top: 0;
+    transition: all 0.25s;
+}
+
+.tab-label:hover {
+    top: -0.25rem;
+    transition: top 0.25s;
+}
+
+.tab-content {
+    /*height: 12rem;*/
+    height: fit-content;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 2.75em;
+    left: 0;
+    padding: 1.618rem;
+    background: #fff;
+    color: #2c3e50;
+    border-bottom: 0.25rem solid #bdc3c7;
+    opacity: 0;
+    transition: all 0.35s;
+}
+
+.tab-switch:checked+.tab-label {
+    background: rgb(255, 255, 255);
+    color: #2c3e50;
+    border-bottom: 0;
+    border-right: 0.125rem solid #fff;
+    transition: all 0.35s;
+    z-index: 1;
+    top: -0.0625rem;
+}
+
+.tab-switch:checked+label+.tab-content {
+    z-index: 2;
+    opacity: 1;
+    transition: all 0.35s;
+}
+
+#userGraphPlaylist {
+    display: inline-block;
+    background-color: #F2AA1F;
+    padding-inline: 20px;
+}
+
+#musicaCards {
+    background-color: #2c3e50;
+    width: 95vw;
+    overflow-x: scroll;
+}

@@ -18,7 +18,7 @@ class LinkedList {
      */
     constructor() {
         this.root = null;
-        this.size = 0;
+        this._size = 0;
         this.ids = 0;
     }
     /**
@@ -36,8 +36,15 @@ class LinkedList {
             }
             current.setNext(newnode);
         }
-        this.size += 1;
+        this._size += 1;
         this.ids += 1;
+    }
+    *iter() {
+        let current = this.root;
+        while (current != null) {
+            yield current.getValue();
+            current = current.getNext();
+        }
     }
     toGraph(name = "LinkedList") {
         let g = `digraph ${name}{`;
@@ -52,12 +59,36 @@ class LinkedList {
             if (current.getNext() != null) {
                 g += `\n\t"${current.getID()}"->"${current.getNext().getID()}"`;
             }
+            current = current.getNext();
         }
         g += `\n\tlabel = "${name}"`;
         g += "}";
         return g;
     }
-
+    size() {
+        return this._size;
+    }
+    get(i) {
+        if (this.root != null) {
+            if (i < 0 || i >= this._size) {
+                console.log("<LINKED LIST: GET> index out of bounds");
+                return null;
+            } else {
+                let auxi = 0;
+                let current = this.root;
+                while (auxi != i && current != null) {
+                    current = current.getNext();
+                }
+                return current.getValue();
+            }
+        } else {
+            console.log("<LINKED LIST: GET> empty list");
+            return null;
+        }
+    }
+    isEmpty() {
+        return this.root == null;
+    }
     toString() {
         let str = "[";
         let current = this.root;
@@ -67,6 +98,7 @@ class LinkedList {
             } else {
                 str += `${current}`
             }
+            current = current.getNext();
         }
         return str += "]";
     }

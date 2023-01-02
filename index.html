@@ -12,11 +12,14 @@
         integrity="sha512-FHsFVKQ/T1KWJDGSbrUhTJyS1ph3eRrxI228ND0EGaEp6v4a/vGwPWd3Dtd/+9cI7ccofZvl/wulICEurHN1pg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script src="tda/sha256.js"></script>
     <script type="module" src="static/index.js"></script>
+    <!--script type="module" src="tda/MerkleTree.js"></script-->
     <link rel="stylesheet" href="static/index.css">
 </head>
 
-<body>
+<body id="body">
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -39,27 +42,223 @@
             </div>
         </div>
     </div>
+    <!--PANEL 1: LOGIN REGISTRO-->
     <div id="panelLoginRegistro">
         <div class="container">
             <div class="row">
                 <!--LOGIN-->
                 <div class="col">
-
+                    <label for="formLogin">LOGIN</label>
+                    <div id="formLogin" class="input-group text-info">
+                        <div class="form-floating">
+                            <input type="text" id="txtLoginUsername" placeholder="Nombre de Usuario"
+                                class="form-control">
+                            <label for="txtLoginUsername">Nombre de Usuario</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" id="txtLoginPassword" placeholder="Contraseña" class="form-control"
+                                value="">
+                            <label for="txtLoginPassword">Contraseña</label>
+                        </div>
+                        <div class="d-grid gap-2 col-6">
+                            <button id="btnLogin" class="btn btn-primary">Ingresar</button>
+                        </div>
+                    </div>
                 </div>
                 <!--REGISTRO-->
                 <div class="col">
-
+                    <label for="formRegister">REGISTRO</label>
+                    <div id="formRegister" class="input-group text-info">
+                        <div class="form-floating">
+                            <input type="text" id="txtRegisterDpi" placeholder="DPI" class="form-control">
+                            <label for="txtRegisterDpi">DPI</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" id="txtRegisterName" placeholder="Nombre Completo" class="form-control">
+                            <label for="txtRegisterName">Nombre Completo</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" id="txtRegisterUsername" placeholder="Nombre de Usuario"
+                                class="form-control">
+                            <label for="txtRegisterUsername">Nombre de Usuario</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="email" id="txtRegisterEmail" placeholder="Correo Electrónico"
+                                class="form-control">
+                            <label for="txtRegisterEmail">Correo Electrónico</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" id="txtRegisterPassword" placeholder="Contraseña"
+                                class="form-control">
+                            <label for="txtRegisterPassword">Contraseña</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="tel" id="txtRegisterPhone" placeholder="Teléfono" class="form-control">
+                            <label for="txtRegisterPhone">Teléfono</label>
+                        </div>
+                        <div class="d-grid gap-2 col-6">
+                            <button id="btnRegister" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="panelAdmin">
+    <!--PANEL 2: ADMINISTRADOR-->
+    <div id="panelAdmin" class="panel-admin">
+        <div class="wrapper">
+            <div class="tabs">
+                <!--USUARIOS-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="adminTabUser" checked class="tab-switch">
+                    <label for="adminTabUser" class="tab-label">Usuarios</label>
+                    <div class="tab-content">
+                        <div class="mb-3">
+                            <input type="file" id="tabUserFile" class="form-control">
+                            <label for="tabUserFile" class="form-label">Ingrese el Archivo de Usuarios</label>
+                        </div>
+                        <div>
+                            <button id="btnShowGraphUsers" class="btn btn-primary">Generar Gráfica</button>
+                            <button id="btnPrintUsers" class="btn btn-primary">Imprimir</button>
+                            <div id="graphUsers"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--PELICULAS-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="adminTabMovies" checked class="tab-switch">
+                    <label for="adminTabMovies" class="tab-label">Películas</label>
+                    <div class="tab-content">
+                        <div class="mb-3">
+                            <input type="file" id="tabMoviesFile" class="form-control">
+                            <label for="tabMovieFile">Ingrese el Archivo de Películas</label>
+                        </div>
+                        <div>
+                            <button id="btnShowGraphMovies" class="btn btn-primary">Generar Gráfica</button>
+                            <button id="btnPrintMovies" class="btn btn-primary">Imprimir</button>
+                            <div id="graphMovies"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--ACTORES-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="adminTabActors" checked class="tab-switch">
+                    <label for="adminTabActors" class="tab-label">Actores</label>
+                    <div class="tab-content">
+                        <div class="mb-3">
+                            <input type="file" id="tabActorsFile" class="form-control">
+                            <label for="tabActorsFile">Ingrese el Archivo de Actores</label>
+                        </div>
+                        <div>
+                            <button id="btnShowGraphActors" class="btn btn-primary">Generar Gráfica</button>
+                            <button id="btnPrintActors" class="btn btn-primary">Imprimir</button>
+                            <div id="graphActors"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--CATEGORIAS-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="adminTabCategory" checked class="tab-switch">
+                    <label for="adminTabCategory" class="tab-label">Categorías</label>
+                    <div class="tab-content">
+                        <div class="mb-3">
+                            <input type="file" id="tabCategoryFile" class="form-control">
+                            <label for="tabCategoryFile">Ingrese el Archivo de Categorías</label>
+                        </div>
+                        <div>
+                            <button id="btnShowGraphCategory" class="btn btn-primary">Generar Tabla</button>
+                            <button id="btnPrintTags" class="btn btn-primary">Imprimir</button>
+                            <div id="supergraphCategory">
+                                <div id="graphCategory"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MERKLE-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="adminMerkle" checked class="tab-switch">
+                    <label for="adminMerkle" class="tab-label">Ver MERKLE</label>
+                    <div class="tab-content">
+                        <div class="mb-3">
+                            <div><button id="btnAdminMerkle" class="btn btn-primary">Actualizar</button></div>
+                            <div id="graphMerkle"> </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="panelUsuario">
-
+    <!--PANEL 3: USUARIO-->
+    <div id="panelUsuario" class="panel-admin">
+        <div class="wrapper">
+            <div class="tabs">
+                <!--MOVIES-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="userTabMovies" checked class="tab-switch">
+                    <label for="userTabMovies" class="tab-label">Ver Películas</label>
+                    <div class="tab-content">
+                        <button id="btnSortMovies" class="btn btn-primary">Aa-Zz</button>
+                        <div id="userMoviesList" class="user-movies"></div>
+                    </div>
+                </div>
+                <!--ACTORS-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="userTabActors" checked class="tab-switch">
+                    <label for="userTabActors" class="tab-label">Ver Actores</label>
+                    <div class="tab-content">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioActorInorden" name="radioActor"
+                                checked>
+                            <label for="radioActorInorden" class="form-check-label">In Orden</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioActorPreorden" name="radioActor">
+                            <label for="radioActorPreorden" class="form-check-label">Pre Orden</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioActorPostorden" name="radioActor">
+                            <label for="radioActorPostorden" class="form-chek-label">Post Orden</label>
+                        </div>
+                        <div id="userActorsList" class="user-actors"></div>
+                    </div>
+                </div>
+                <!--CATEGORIAS-->
+                <div class="tab">
+                    <input type="radio" name="css-tabs" id="userTabTags" checked class="tab-switch">
+                    <label for="userTabTags" class="tab-label">Ver Categorías</label>
+                    <div class="tab-content">
+                        <div id="supergraphCategoryUser">
+                            <div id="graphCategoryUser"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
+    <!--PANEL 4: VISTA DE PELICULA-->
+    <div id="panelPelicula" class="panel-admin">
+        <button id="btnVolver" class="btn btn-primary">Volver</button>
+        <div class="card">
+            <h1 class="card-header" id="cardNombre">Nombre Película</h1>
+            <div class="card-body">
+                <h2 class="card-title" id="cardId">ID Pelicula</h2>
+                <h3 class="card-title" id="cardPuntuacion">Puntuación</h3>
+                <h4 class="card-title" id="cardPrecio">Precio</h4>
+                <h4 class="card-title" id="cardPaginas">Paginas</h4>
+                <h5 class="card-title" id="cardCategoria">Categoría</h5>
+                <p class="card-text" id="cardDesc">Descripción</p>
+                <div class="form-control mb-3">
+                    <button id="btnAlquilar" class="btn btn-primary">Alquilar</button>
+                </div>
+                <div class="form-control mb-3">
+                    <button class="btn btn-primary" id="btnAddComment">Publicar Comentario</button>
+                    <textarea name="" id="txtComentario" cols="30" rows="10" placeholder="Comentario..."></textarea>
+                </div>
+                <div id="comentarios" class="user-movies"></div>
+            </div>
+        </div>
+    </div>
     <!--BOOTSTRAP-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">

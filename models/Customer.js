@@ -10,12 +10,13 @@ class Customer {
      * @param {*} phone 
      */
     constructor(dpi, name, username, email, password, phone) {
-        this.dpi = parseInt(dpi);
+        this.dpi = dpi;
         this.name = `${name}`;
         this.username = `${username}`;
         this.email = `${email}`;
         this.password = `${password}`;
-        this.phone = parseInt(phone);
+        this.phone = phone;
+        this.admin = false;
     }
     getDPI() { return this.dpi; }
     getName() { return this.name; }
@@ -23,6 +24,8 @@ class Customer {
     getEmail() { return this.email; }
     getPassword() { return this.password; }
     getPhone() { return this.phone; }
+    isAdmin() { return this.admin; }
+    setAdmin(admin) { this.admin = admin; }
     toString() {
         return `DPI: ${this.dpi}\nName: ${this.name}\nUsername: ${this.username}\nEmail: ${this.email}\nPassword: ${this.password}\nPhone: ${this.password}`;
     }
